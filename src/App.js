@@ -38,30 +38,30 @@ function App() {
           <div className="Input-container">
               {/* Slope Slider */}
               <div>
-                <label htmlFor="slope" className="Slope-input-label">Slope (m): <span className="font-bold text-indigo-600"></span></label>
+                <label htmlFor="slope" className="Slope-input-label">Slope (m): <span className="font-bold text-indigo-600">{slope.toFixed(2)}</span></label>
                 <input
                   type="range"
                   id="slope"
                   min="-5"
                   max="5"
                   step="0.01"
-                  value="1"
-                  onChange={() => {}}
+                  value={slope}
+                  onChange={(e) => setSlope(parseFloat(e.target.value))}
                   className="Slope-input"
                 />
               </div>
 
               {/* Intercept Slider */}
               <div>
-                <label htmlFor="intercept" className="Intercept-input-label">Y-Intercept (b): <span className="font-bold text-indigo-600"></span></label>
+                <label htmlFor="intercept" className="Intercept-input-label">Y-Intercept (b): <span className="font-bold text-indigo-600">{intercept.toFixed(2)}</span></label>
                 <input
                   type="range"
                   id="intercept"
                   min="-10"
                   max="10"
                   step="0.1"
-                  value="1"
-                  onChange={() => {}}
+                  value={intercept}
+                  onChange={(e) => setIntercept(parseFloat(e.target.value))}
                   className="Intercept-input"
                 />
               </div>
@@ -71,13 +71,13 @@ function App() {
                <h3 className="Title">Model Performance</h3>
                <div className="Performance-metrics">
                    <p className="Mse-title Title-small">Mean Squared Error (MSE)</p>
-                   <p className="Mse Title-small">0.254</p>
+                   <p className="Mse Title-small">{mse.toFixed(4)}</p>
                </div>
             </div>
 
             <div className="Reset-button-container">
                 <button 
-                    onClick={() => {}}
+                    onClick={() => {setSlope(1); setIntercept(2);}}
                     className="Reset-button"
                 >
                     Reset Parameters
