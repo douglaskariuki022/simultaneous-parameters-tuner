@@ -1,6 +1,30 @@
-
+import React, { useState, useEffect, useRef } from 'react';
+import * as d3 from 'd3';
 
 function App() {
+
+  // Initial data points for the linear regression
+  const initialData = [
+    { x: 1, y: 3.5 }, { x: 2, y: 4 }, { x: 3, y: 5.5 },
+    { x: 4, y: 6 }, { x: 5, y: 8 }, { x: 6, y: 7.5 },
+    { x: 7, y: 9 }, { x: 8, y: 10.5 }, { x: 9, y: 11 },
+    { x: 10, y: 12 }
+  ];
+
+  const [data, setData] = useState(initialData);
+  const [slope, setSlope] = useState(1);
+  const [intercept, setIntercept] = useState(2);
+  const [mse, setMse] = useState(0);
+
+  useEffect(() => {
+    let error = 0;
+    data.forEach(p => {
+      const predictedY = slope * p.x + intercept;
+      error += Math.pow(p.y - predictedY, 2);
+    });
+    setMse(error / data.length);
+  }, [data, slope, intercept]);
+
   return (
     <div className="App">
       <header className="Title">
