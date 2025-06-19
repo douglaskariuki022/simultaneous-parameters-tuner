@@ -60,6 +60,16 @@ function App() {
                 </button>
             </div>
         </div>
+
+        <div className="Grid-item">
+          <h2 className="Title">Data Visualization</h2>
+          <div className="Chart-container">
+            {/* Placeholder for the chart */}
+            <div className="Chart-placeholder">
+              <p className="Chart-placeholder-text">Chart will be rendered here</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
