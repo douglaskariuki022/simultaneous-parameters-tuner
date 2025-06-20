@@ -94,7 +94,14 @@ function App() {
 }
 
 function ScatterPlot({data, slope, intercept}) {
+  const svgRef = useRef();
+  const wrapperRef = useRef();
 
+  return (
+    <div ref={wrapperRef} style={{ width: '100%', height: '500px' }}>
+      <svg ref={svgRef}></svg>
+    </div>
+  );
 }
 
 export default App;
