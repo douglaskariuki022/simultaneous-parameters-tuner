@@ -86,7 +86,7 @@ function App() {
         </div>
 
         <div className="Grid-item">
-          <ScatterPlot />
+          <ScatterPlot data={data} slope={slope} intercept={intercept} />
         </div>
       </div>
     </div>
