@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, use } from 'react';
 import * as d3 from 'd3';
+import './App.css';
 
 function App() {
 
@@ -33,7 +34,7 @@ function App() {
       </header>
 
       <div className="Grid">
-        <div className="Grid-item">
+        <div className="Grid-item-1">
           <h2 className="Title">Parameters</h2>
           <div className="Input-container">
               {/* Slope Slider */}
@@ -85,7 +86,7 @@ function App() {
             </div>
         </div>
 
-        <div className="Grid-item">
+        <div className="Grid-item-2">
           <ScatterPlot data={data} slope={slope} intercept={intercept} />
         </div>
       </div>
@@ -96,6 +97,24 @@ function App() {
 function ScatterPlot({data, slope, intercept}) {
   const svgRef = useRef();
   const wrapperRef = useRef();
+
+  const [dimensions, setDimensions] = useState({width: 800, height: 500});
+
+  useEffect(() => {
+    const updateDimensions = () => {
+        if (wrapperRef.current) {
+            setDimensions({
+                width: wrapperRef.current.clientWidth,
+                height: 500,
+            });
+        }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
 
   useEffect(() => {
     if (!data || data.length === 0) return;
