@@ -183,7 +183,7 @@ function ScatterPlot({data, slope, intercept}) {
       .attr("stroke", "red")
       .attr("stroke-width", 2)
       .style("stroke-dasharray", ("3, 3"));
-  }, [data, slope, intercept])
+  }, [data, slope, intercept, dimensions])
   return (
     <div ref={wrapperRef} style={{ width: '100%', height: '500px' }}>
       <svg ref={svgRef}></svg>
