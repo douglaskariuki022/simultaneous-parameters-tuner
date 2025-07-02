@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, use } from 'react';
 import * as d3 from 'd3';
+import './App.css';
 
 function App() {
 
@@ -33,7 +34,7 @@ function App() {
       </header>
 
       <div className="Grid">
-        <div className="Grid-item">
+        <div className="Grid-item-1">
           <h2 className="Title">Parameters</h2>
           <div>
             <p className='Title-small'>Linear Equation</p>
@@ -92,16 +93,107 @@ function App() {
             </div>
         </div>
 
-        <div className="Grid-item">
-          <h2 className="Title">Data Visualization</h2>
-          <div className="Chart-container">
-            {/* Placeholder for the chart */}
-            <div className="Chart-placeholder">
-              <p className="Chart-placeholder-text">Chart will be rendered here</p>
-            </div>
-          </div>
+        <div className="Grid-item-2">
+          <ScatterPlot data={data} slope={slope} intercept={intercept} />
         </div>
       </div>
+    </div>
+  );
+}
+
+function ScatterPlot({data, slope, intercept}) {
+  const svgRef = useRef();
+  const wrapperRef = useRef();
+
+  const [dimensions, setDimensions] = useState({width: 800, height: 500});
+
+  useEffect(() => {
+    const updateDimensions = () => {
+        if (wrapperRef.current) {
+            setDimensions({
+                width: wrapperRef.current.clientWidth,
+                height: 500,
+            });
+        }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
+  useEffect(() => {
+    if (!data || data.length === 0) return;
+
+    const wrapper = wrapperRef.current;
+    const svg = d3.select(svgRef.current);
+    svg.selectAll("*").remove();
+
+    const margin = { top: 20, right: 30, bottom: 40, left: 50 };
+    const width = wrapper.clientWidth - margin.left - margin.right;
+    const height = 500 - margin.top - margin.bottom;
+
+    svg.attr("width", width + margin.left + margin.right)
+       .attr("height", height + margin.top + margin.bottom);
+
+    const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const xMax = d3.max(data, d => d.x);
+    const yMax = d3.max(data, d => d.y);
+    const extent = [0, Math.max(xMax, yMax) * 1.1];
+
+    const xScale = d3.scaleLinear().domain(extent).range([0, width]);
+    const yScale = d3.scaleLinear().domain(extent).range([height, 0]);
+
+    const xAxis = d3.axisBottom(xScale);
+    const yAxis = d3.axisLeft(yScale);
+
+    g.append("g").attr("transform", `translate(0,${height})`).call(xAxis)
+     .append("text")
+     .attr("y", 35)
+     .attr("x", width / 2)
+     .attr("fill", "#333")
+     .attr("font-size", "12px")
+     .text("X Value");
+
+    g.append("g").call(yAxis)
+     .append("text")
+     .attr("transform", "rotate(-90)")
+     .attr("y", -35)
+     .attr("x", -height / 2)
+     .attr("fill", "#333")
+     .attr("font-size", "12px")
+     .attr("text-anchor", "middle")
+     .text("Y Value");
+
+    g.selectAll("circle")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("cx", d => xScale(d.x))
+      .attr("cy", d => yScale(d.y))
+      .attr("r", 5)
+      .attr("fill", "steelblue")
+      .attr("opacity", 0.7);
+
+    const x1 = extent[0];
+    const y1 = slope * x1 + intercept;
+    const x2 = extent[1];
+    const y2 = slope * x2 + intercept;
+
+    g.append("line")
+      .attr("x1", xScale(x1))
+      .attr("y1", yScale(y1))
+      .attr("x2", xScale(x2))
+      .attr("y2", yScale(y2))
+      .attr("stroke", "red")
+      .attr("stroke-width", 2)
+      .style("stroke-dasharray", ("3, 3"));
+  }, [data, slope, intercept, dimensions])
+  return (
+    <div ref={wrapperRef} style={{ width: '100%', height: '500px' }}>
+      <svg ref={svgRef}></svg>
     </div>
   );
 }
