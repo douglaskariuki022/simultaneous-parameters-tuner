@@ -35,6 +35,13 @@ function App() {
       <div className="Grid">
         <div className="Grid-item">
           <h2 className="Title">Parameters</h2>
+          <div>
+            <p className='Title-small'>Linear Equation</p>
+            <p className='Title-small'>
+              y = {slope.toFixed(2)}x {intercept >= 0 ? '+' : '-'} {Math.abs(intercept).toFixed(2)}
+            </p>
+          </div>
+
           <div className="Input-container">
               {/* Slope Slider */}
               <div>
