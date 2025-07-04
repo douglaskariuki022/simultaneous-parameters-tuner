@@ -127,8 +127,7 @@ function ScatterPlot({data, slope, intercept}) {
     const width = wrapper.clientWidth - margin.left - margin.right;
     const height = 500 - margin.top - margin.bottom;
 
-    svg.attr("width", width + margin.left + margin.right)
-       .attr("height", height + margin.top + margin.bottom);
+    svg.attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`);
 
     const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
