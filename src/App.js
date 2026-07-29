@@ -130,7 +130,7 @@ function ScatterPlot({data, slope, intercept}) {
     if (!data || data.length === 0) return;
 
     const wrapper = wrapperRef.current;
-    const svg = d3.select(svgRef.current);
+    const svg = select(svgRef.current);
     svg.selectAll("*").remove();
 
     const margin = { top: 20, right: 30, bottom: 40, left: 50 };
@@ -141,15 +141,15 @@ function ScatterPlot({data, slope, intercept}) {
 
     const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
-    const xMax = d3.max(data, d => d.x);
-    const yMax = d3.max(data, d => d.y);
+    const xMax = max(data, d => d.x);
+    const yMax = max(data, d => d.y);
     const extent = [0, Math.max(xMax, yMax) * 1.1];
 
-    const xScale = d3.scaleLinear().domain(extent).range([0, width]);
-    const yScale = d3.scaleLinear().domain(extent).range([height, 0]);
+    const xScale = scaleLinear().domain(extent).range([0, width]);
+    const yScale = scaleLinear().domain(extent).range([height, 0]);
 
-    const xAxis = d3.axisBottom(xScale);
-    const yAxis = d3.axisLeft(yScale);
+    const xAxis = axisBottom(xScale);
+    const yAxis = axisLeft(yScale);
 
     g.append("g").attr("transform", `translate(0,${height})`).call(xAxis)
      .append("text")
