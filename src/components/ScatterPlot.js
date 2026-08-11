@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { select } from 'd3-selection';
 import { max } from 'd3-array';
 import { scaleLinear } from 'd3-scale';
@@ -28,7 +28,7 @@ function ScatterPlot({ data, slope, intercept }) {
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!data || data.length === 0) return;
 
     const wrapper = wrapperRef.current;
