@@ -32,3 +32,38 @@ header {
     margin-right: 1rem;
     margin-left: 3rem;
 }
+
+.Reset-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.Reset-button {
+    background: linear-gradient(135deg, #1f2937, #374151);
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(31, 41, 55, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.Reset-button:hover {
+    background: linear-gradient(135deg, #111827, #1f2937);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(31, 41, 55, 0.3);
+}
+
+.Reset-button:active {
+    transform: translateY(0);
+}
+
+.Reset-button:focus-visible {
+    outline: 3px solid rgba(99, 102, 241, 0.6);
+    outline-offset: 3px;
+}
